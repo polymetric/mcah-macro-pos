@@ -17,8 +17,9 @@ public class MacroPOS implements ModInitializer {
 	private static MinecraftClient mc = MinecraftClient.getInstance();
 
 	private static boolean do_things = false;
-	private static int counter = 0;
-	private static boolean writing = false;
+	private static int counter = 0; // number of screenshots taken
+	private static int timer = 0; // number of ticks the program has been running
+	private static boolean writing = false; // whether we're writing to a screenshot file or not
 	private static boolean go_backwards = false;
 	private static float increment;
 
@@ -51,7 +52,10 @@ public class MacroPOS implements ModInitializer {
 			while (keyBinding.wasPressed()) {
 				do_things = !do_things;
 			}
+			
 			if (do_things) {
+				timer++;
+				
 				// this constructs the path of the current screenshot we are dealing with this loop
 				// the game's built in screenshot function does this already but we also want to check if the file exists
 				// so we're also doing it again here
@@ -78,6 +82,10 @@ public class MacroPOS implements ModInitializer {
 				if (!screenshot.exists()) {
 					System.out.println(screenshot.getAbsolutePath());
 //					System.out.println("screenshot does not exist");
+					return;
+				}
+				
+				if (timer % 100 != 0) {
 					return;
 				}
 
