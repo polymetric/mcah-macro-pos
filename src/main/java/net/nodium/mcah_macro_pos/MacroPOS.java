@@ -58,8 +58,8 @@ public class MacroPOS implements ModInitializer {
 //				 p_max = 15;
 //				 p_min = -5;
 //				 p_max = 5;
-				 p_center = -2.43f;
-				 p_radius = 1;
+				 p_center = -2.5f;
+				 p_radius = 2;
 				 p_min = p_center - p_radius;
 				 p_max = p_center + p_radius;
 				 p = p_min;
@@ -69,8 +69,8 @@ public class MacroPOS implements ModInitializer {
 //				 y_max = -90;
 //				 y_min = 35;
 //				 y_max = 55;
-				 y_center = -119.95f;
-				 y_radius = .5f;
+				 y_center = -119.9f;
+				 y_radius = .3f;
 				 y_min = y_center - y_radius;
 				 y_max = y_center + y_radius;
 				 y = y_max;
