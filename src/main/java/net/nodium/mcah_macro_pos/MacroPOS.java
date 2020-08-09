@@ -80,6 +80,12 @@ public class MacroPOS implements ModInitializer {
 				mc.player.yaw = y;
 				mc.player.pitch = p;
 
+				// for some reason setting position and taking a screenshot on the same tick results in
+				// it taking a screenshot of the previous tick, not the current one, so we have to set the first position and then skip a tick
+				if (counter == 0) {
+					return;
+				}
+
 				// this constructs the path of the current screenshot we are dealing with this loop
 				// the game's built in screenshot function does this already but we also want to check if the file exists
 				// so we're also doing it again here
