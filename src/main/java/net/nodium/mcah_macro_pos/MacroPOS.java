@@ -50,49 +50,21 @@ public class MacroPOS implements ModInitializer {
 			// this turns on the bot or turns it off, restarting it when it's stopped
 			while (keyBinding.wasPressed()) {
 				do_things = !do_things;
-				
-				increment = 0.05f;
-
-				// camera pitch
-//				 p_min = -25;
-//				 p_max = 15;
-//				 p_min = -5;
-//				 p_max = 5;
-				 p_center = -2.43f;
-				 p_radius = 1;
-				 p_min = p_center - p_radius;
-				 p_max = p_center + p_radius;
-				 p = p_min;
-				
-				// camera yaw
-//				 y_min = -150;
-//				 y_max = -90;
-//				 y_min = 35;
-//				 y_max = 55;
-				 y_center = -119.95f;
-				 y_radius = .5f;
-				 y_min = y_center - y_radius;
-				 y_max = y_center + y_radius;
-				 y = y_max;
 			}
 			if (do_things) {
-				// this is the part where we actually set the player position
-				mc.player.yaw = y;
-				mc.player.pitch = p;
-
 				// this constructs the path of the current screenshot we are dealing with this loop
 				// the game's built in screenshot function does this already but we also want to check if the file exists
 				// so we're also doing it again here
 				// also for some reason mcpath.getAbsolutePath() returns the minecraft directory with a dot at the end
 				// so we have to remove it, that's what substring() is for
 				String mcpath = mc.runDirectory.getAbsolutePath();
-				File screenshot = new File(mcpath + String.format("/screenshots/%.2f_%.2f_%04d.png", p, y, counter));
+				File screenshot = new File(mcpath + String.format("/screenshots/%d.png", counter));
 
 				if (!writing) {
 					if (screenshot.exists()) {
 						screenshot.delete();
 					}
-					ScreenshotUtils.saveScreenshot(mc.runDirectory, String.format("%.2f_%.2f_%04d.png", p, y, counter),
+					ScreenshotUtils.saveScreenshot(mc.runDirectory, String.format("%d.png", counter),
 							mc.getWindow().getFramebufferWidth(), mc.getWindow().getFramebufferHeight(),
 							mc.getFramebuffer(), (text) -> {
 								mc.execute(() -> {
@@ -104,7 +76,7 @@ public class MacroPOS implements ModInitializer {
 
 				// loop until the screenshot is finished writing (or maybe it waits until the previous one idk)
 				if (!screenshot.exists()) {
-//					System.out.println(screenshot.getAbsolutePath());
+					System.out.println(screenshot.getAbsolutePath());
 //					System.out.println("screenshot does not exist");
 					return;
 				}
@@ -117,36 +89,10 @@ public class MacroPOS implements ModInitializer {
 				writing = false;
 				counter++;
 //				System.out.println(counter);
-
-				// increment yaw in the current direction (forwards or backwards)
-				if (!go_backwards) {
-					y -= increment;
-				} else {
-					y += increment;
-				}
-
-				// if we've hit the yaw edges, then increase pitch and bounce back
-				if (y > y_max || y < y_min) {
-					go_backwards = !go_backwards;
-					p += increment;
-				}
-
-				// if we get to the end of the pitch bracket, we're done
-				if (p > p_max) {
-					System.out.println("bruh");
-					System.out.println(String.format("%s %s", p, p_max));
-					do_things = false;
-					y = y_max;
-					p = p_min;
-					counter = 0;
-					writing = false;
-				}
 			// this happens if do_things becomes false before the end, which probably means we pressed R to cancel
 			// so we reset everything
 			} else {
-				y = y_max;
-				p = p_min;
-				counter = 0;
+//				counter = 0;
 				writing = false;
 			}
 		});
