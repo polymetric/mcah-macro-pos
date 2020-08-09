@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "mcah-macro-pos",
+  "id": "mcah-macro-pos-n00bbot",
   "version": "${version}",
 
   "name": "Minecraft@Home Screenshot Bot",
@@ -9,8 +9,8 @@
     "polymetric_"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://nodium.net/",
+    "sources": "https://github.com/polymetric1/mcah-macro-pos"
   },
 
   "license": "GPLv3",
