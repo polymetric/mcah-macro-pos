@@ -51,15 +51,15 @@ public class MacroPOS implements ModInitializer {
 			while (keyBinding.wasPressed()) {
 				do_things = !do_things;
 				
-				increment = 0.25f;
+				increment = 0.05f;
 
 				// camera pitch
 //				 p_min = -25;
 //				 p_max = 15;
 //				 p_min = -5;
 //				 p_max = 5;
-				 p_center = 0;
-				 p_radius = 5;
+				 p_center = -2.43f;
+				 p_radius = 1;
 				 p_min = p_center - p_radius;
 				 p_max = p_center + p_radius;
 				 p = p_min;
@@ -69,8 +69,8 @@ public class MacroPOS implements ModInitializer {
 //				 y_max = -90;
 //				 y_min = 35;
 //				 y_max = 55;
-				 y_center = 45;
-				 y_radius = 5;
+				 y_center = -119.95f;
+				 y_radius = .5f;
 				 y_min = y_center - y_radius;
 				 y_max = y_center + y_radius;
 				 y = y_max;
@@ -86,14 +86,13 @@ public class MacroPOS implements ModInitializer {
 				// also for some reason mcpath.getAbsolutePath() returns the minecraft directory with a dot at the end
 				// so we have to remove it, that's what substring() is for
 				String mcpath = mc.runDirectory.getAbsolutePath();
-				File screenshot = new File(mcpath.substring(0, mcpath.length() - 1)
-						+ String.format("screenshots/%s_%s_%04d.png", p, y, counter));
+				File screenshot = new File(mcpath + String.format("/screenshots/%.2f_%.2f_%04d.png", p, y, counter));
 
 				if (!writing) {
 					if (screenshot.exists()) {
 						screenshot.delete();
 					}
-					ScreenshotUtils.saveScreenshot(mc.runDirectory, String.format("%s_%s_%04d.png", p, y, counter),
+					ScreenshotUtils.saveScreenshot(mc.runDirectory, String.format("%.2f_%.2f_%04d.png", p, y, counter),
 							mc.getWindow().getFramebufferWidth(), mc.getWindow().getFramebufferHeight(),
 							mc.getFramebuffer(), (text) -> {
 								mc.execute(() -> {
