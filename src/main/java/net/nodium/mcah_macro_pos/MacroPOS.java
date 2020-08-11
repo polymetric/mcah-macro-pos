@@ -16,11 +16,13 @@ public class MacroPOS implements ModInitializer {
 	private static KeyBinding keyBinding;
 	private static MinecraftClient mc = MinecraftClient.getInstance();
 
-	private static boolean do_things = false;
-	private static int counter = 0;
-	private static boolean writing = false;
+	// other general variables
+	private static boolean do_things = false; // whether the macro is active or not
+	private static boolean writing = false; // whether or not a screenshot is being taken
 	private static boolean go_backwards = false;
-	private static float increment;
+	private static int counter = 0; // how many screenshots we've actually taken (this is NOT equal to the number of ticks the macro has been active)
+
+	private static float py_increment; // increment of pitch and yaw in degrees
 
 	// camera pitch
 	private static float p_center;
@@ -39,8 +41,7 @@ public class MacroPOS implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		// key to start and stop the screenshotting
-		keyBinding = new KeyBinding("key.mcah-macro-pos.spook", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R,
-				"category.mcah-macro-pos.test");
+		keyBinding = new KeyBinding("key.mcah-macro-pos.spook", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "category.mcah-macro-pos.test");
 
 		KeyBindingHelper.registerKeyBinding(keyBinding);
 
@@ -50,25 +51,19 @@ public class MacroPOS implements ModInitializer {
 			// this turns on the bot or turns it off, restarting it when it's stopped
 			while (keyBinding.wasPressed()) {
 				do_things = !do_things;
-				
-				increment = 0.15f;
+
+				counter = 0;
+
+				py_increment = 0.15f; // when the mouse is moved 1px in alpha, the camera is rotated by 0.15 degrees (at default in-game sensitivity)
 
 				// camera pitch
-//				 p_min = -25;
-//				 p_max = 15;
-//				 p_min = -5;
-//				 p_max = 5;
 				 p_center = -2.5f;
 				 p_radius = 2;
 				 p_min = p_center - p_radius;
 				 p_max = p_center + p_radius;
 				 p = p_min;
-				
+
 				// camera yaw
-//				 y_min = -150;
-//				 y_max = -90;
-//				 y_min = 35;
-//				 y_max = 55;
 				 y_center = -120f;
 				 y_radius = .3f;
 				 y_min = y_center - y_radius;
@@ -126,34 +121,22 @@ public class MacroPOS implements ModInitializer {
 
 				// increment yaw in the current direction (forwards or backwards)
 				if (!go_backwards) {
-					y -= increment;
+					y -= py_increment;
 				} else {
-					y += increment;
+					y += py_increment;
 				}
 
 				// if we've hit the yaw edges, then increase pitch and bounce back
 				if (y > y_max || y < y_min) {
 					go_backwards = !go_backwards;
-					p += increment;
+					p += py_increment;
 				}
 
 				// if we get to the end of the pitch bracket, we're done
 				if (p > p_max) {
 					System.out.println("bruh");
-					System.out.println(String.format("%s %s", p, p_max));
 					do_things = false;
-					y = y_max;
-					p = p_min;
-					counter = 0;
-					writing = false;
 				}
-			// this happens if do_things becomes false before the end, which probably means we pressed R to cancel
-			// so we reset everything
-			} else {
-				y = y_max;
-				p = p_min;
-				counter = 0;
-				writing = false;
 			}
 		});
 	}
