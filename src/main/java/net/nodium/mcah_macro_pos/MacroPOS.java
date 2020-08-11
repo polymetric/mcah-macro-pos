@@ -41,7 +41,7 @@ public class MacroPOS implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		// key to start and stop the screenshotting
-		keyBinding = new KeyBinding("key.mcah-macro-pos.spook", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "category.mcah-macro-pos.test");
+		keyBinding = new KeyBinding("key.mcah-macro-pos.toggle", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_R, "category.mcah-macro-pos.test");
 
 		KeyBindingHelper.registerKeyBinding(keyBinding);
 
