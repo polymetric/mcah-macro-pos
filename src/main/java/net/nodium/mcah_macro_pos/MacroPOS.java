@@ -51,7 +51,7 @@ public class MacroPOS implements ModInitializer {
 			while (keyBinding.wasPressed()) {
 				do_things = !do_things;
 				
-				increment = 0.05f;
+				increment = 0.15f;
 
 				// camera pitch
 //				 p_min = -25;
@@ -69,7 +69,7 @@ public class MacroPOS implements ModInitializer {
 //				 y_max = -90;
 //				 y_min = 35;
 //				 y_max = 55;
-				 y_center = -119.9f;
+				 y_center = -120f;
 				 y_radius = .3f;
 				 y_min = y_center - y_radius;
 				 y_max = y_center + y_radius;
