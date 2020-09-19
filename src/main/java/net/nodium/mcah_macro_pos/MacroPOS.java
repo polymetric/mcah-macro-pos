@@ -14,7 +14,7 @@ import net.minecraft.client.util.ScreenshotUtils;
 
 public class MacroPOS implements ModInitializer {
 	private static KeyBinding keyBinding;
-	private static MinecraftClient mc = MinecraftClient.getInstance();
+	private static final MinecraftClient mc = MinecraftClient.getInstance();
 
 	// other general variables
 	private static boolean do_things = false; // whether the macro is active or not
@@ -53,6 +53,7 @@ public class MacroPOS implements ModInitializer {
 				do_things = !do_things;
 
 				counter = 0;
+				writing = false;
 
 				py_increment = 0.15f; // when the mouse is moved 1px in alpha, the camera is rotated by 0.15 degrees (at default in-game sensitivity)
 
@@ -69,17 +70,14 @@ public class MacroPOS implements ModInitializer {
 				 y_min = y_center - y_radius;
 				 y_max = y_center + y_radius;
 				 y = y_max;
+				 
+				mc.player.yaw = y;
+				mc.player.pitch = p;
 			}
 			if (do_things) {
 				// this is the part where we actually set the player position
 				mc.player.yaw = y;
 				mc.player.pitch = p;
-
-				// for some reason setting position and taking a screenshot on the same tick results in
-				// it taking a screenshot of the previous tick, not the current one, so we have to set the first position and then skip a tick
-				if (counter == 0) {
-					return;
-				}
 
 				// this constructs the path of the current screenshot we are dealing with this loop
 				// the game's built in screenshot function does this already but we also want to check if the file exists
